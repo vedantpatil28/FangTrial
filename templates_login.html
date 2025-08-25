@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackFang Intelligence - Professional Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #0c0c0c 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+            z-index: 1;
+        }
+        
+        .login-container {
+            position: relative;
+            z-index: 10;
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(42, 42, 42, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            padding: 60px 50px;
+            border-radius: 24px;
+            box-shadow: 
+                0 32px 64px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 480px;
+            width: 100%;
+            border-top: 4px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #dc2626, #f59e0b, #10b981, #3b82f6, #8b5cf6);
+            border-radius: 24px 24px 0 0;
+        }
+        
+        .brand-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .brand-logo {
+            font-size: 40px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #dc2626 0%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            text-shadow: 0 0 30px rgba(220, 38, 38, 0.3);
+        }
+        
+        .brand-tagline {
+            color: #a0a0a0;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        .error-message {
+            background: rgba(220, 38, 38, 0.1);
+            color: #dc2626;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #dc2626;
+            margin-bottom: 24px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .login-form {
+            margin-bottom: 32px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #e5e5e5;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #dc2626;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .form-input::placeholder {
+            color: #666;
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            border: none;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .login-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(220, 38, 38, 0.4);
+        }
+        
+        .login-button:hover::before {
+            left: 100%;
+        }
+        
+        .login-button:active {
+            transform: translateY(-1px);
+        }
+        
+        .demo-credentials {
+            margin-top: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border-radius: 16px;
+            border-left: 4px solid #dc2626;
+            backdrop-filter: blur(10px);
+        }
+        
+        .demo-title {
+            color: #dc2626;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .demo-info {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            color: #d0d0d0;
+        }
+        
+        .demo-info strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 640px) {
+            .login-container {
+                padding: 40px 30px;
+                margin: 20px;
+                border-radius: 20px;
+            }
+            
+            .brand-logo {
+                font-size: 32px;
+            }
+            
+            .form-input, .login-button {
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    
+    <div class="login-container">
+        <div class="brand-section">
+            <div class="brand-logo">⚡ BLACKFANG INTELLIGENCE</div>
+            <div class="brand-tagline">Professional Competitive Intelligence Platform</div>
+        </div>
+        
+        {% if error %}
+        <div class="error-message" style="display: block;">
+            {{ error }}
+        </div>
+        {% endif %}
+        
+        <form class="login-form" method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label class="form-label" for="email">Email Address</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email"
+                    class="form-input"
+                    value="demo@blackfangintel.com"
+                    placeholder="Enter your email address"
+                    required 
+                    autocomplete="email"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password"
+                    class="form-input"
+                    value="demo123"
+                    placeholder="Enter your password"
+                    required 
+                    autocomplete="current-password"
+                >
+            </div>
+            
+            <button type="submit" class="login-button">
+                Access Intelligence Dashboard
+            </button>
+        </form>
+        
+        <div class="demo-credentials">
+            <div class="demo-title">🎯 Demo Account Access</div>
+            <div class="demo-info"><strong>Email:</strong> demo@blackfangintel.com</div>
+            <div class="demo-info"><strong>Password:</strong> demo123</div>
+            <div class="demo-info" style="margin-top: 16px;">
+                Experience the complete competitive intelligence platform with real-time monitoring, 
+                threat detection, and strategic recommendations for automotive dealerships.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
